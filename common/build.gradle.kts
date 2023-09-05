@@ -13,6 +13,7 @@ buildscript {
 plugins {
     kotlin("multiplatform")
     id("com.android.library")
+    kotlin("plugin.serialization")
     //kotlin("android")
     `maven-publish`
 }
@@ -62,6 +63,7 @@ kotlin {
             dependencies {
                 implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:${extra["kotlinx.version"]!!}")
                 implementation("org.jetbrains.kotlin:kotlin-reflect:${extra["kotlin.version"]!!}")
+                implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.1")
             }
         }
         val commonTest by getting {

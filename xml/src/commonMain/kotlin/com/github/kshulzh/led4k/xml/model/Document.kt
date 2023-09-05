@@ -14,18 +14,10 @@
  *   limitations under the License.
  */
 
-package com.github.kshulzh.led4k.common.model.areas
+package com.github.kshulzh.led4k.xml.model
 
-import com.github.kshulzh.led4k.common.model.Point
-
-open class Area(properties: Map<Any, Any?>) : Point(properties) {
-    var type: String
-    var width: Long
-    var height: Long
-
-    init {
-        type = properties.getString("type")
-        width = properties.getLong("width")
-        height = properties.getLong("height")
-    }
-}
+class Document(
+    var tag: Tag?,
+    var version: String = "1.0",
+    var encoding: String = "UTF-8"
+)

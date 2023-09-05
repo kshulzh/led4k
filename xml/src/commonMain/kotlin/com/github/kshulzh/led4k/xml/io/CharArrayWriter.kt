@@ -14,18 +14,14 @@
  *   limitations under the License.
  */
 
-package com.github.kshulzh.led4k.common.model.areas
+package com.github.kshulzh.led4k.xml.io
 
-import com.github.kshulzh.led4k.common.model.Point
+class CharArrayWriter(val array: CharArray, override var properties: MutableMap<Any, Any?> = mutableMapOf()) : Writer {
+    override var position: Int = 0
 
-open class Area(properties: Map<Any, Any?>) : Point(properties) {
-    var type: String
-    var width: Long
-    var height: Long
-
-    init {
-        type = properties.getString("type")
-        width = properties.getLong("width")
-        height = properties.getLong("height")
+    override fun write(c: Char) {
+        if (position < size()) array[position++] = c
     }
+
+    override fun size(): Int = array.size
 }

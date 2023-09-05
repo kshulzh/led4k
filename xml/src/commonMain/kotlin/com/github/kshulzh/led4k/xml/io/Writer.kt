@@ -14,18 +14,22 @@
  *   limitations under the License.
  */
 
-package com.github.kshulzh.led4k.common.model.areas
+package com.github.kshulzh.led4k.xml.io
 
-import com.github.kshulzh.led4k.common.model.Point
+interface Writer {
+    var properties: MutableMap<Any, Any?>
+    var position: Int
+    fun write(c: Char)
 
-open class Area(properties: Map<Any, Any?>) : Point(properties) {
-    var type: String
-    var width: Long
-    var height: Long
-
-    init {
-        type = properties.getString("type")
-        width = properties.getLong("width")
-        height = properties.getLong("height")
+    fun write(c: CharArray) {
+        c.forEach {
+            write(it)
+        }
     }
+
+    fun write(s: String) {
+        write(s.toCharArray())
+    }
+
+    fun size(): Int
 }

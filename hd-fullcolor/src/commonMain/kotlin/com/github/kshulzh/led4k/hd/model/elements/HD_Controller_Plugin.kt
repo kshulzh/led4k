@@ -14,18 +14,24 @@
  *   limitations under the License.
  */
 
-package com.github.kshulzh.led4k.common.model.areas
+package com.github.kshulzh.led4k.hd.model.elements
 
-import com.github.kshulzh.led4k.common.model.Point
+class HD_Controller_Plugin : HD_Node() {
+    override var name: String = "HD_Controller_Plugin"
+    lateinit var appVersion: String
+    lateinit var deviceModel: String
+    lateinit var height: String
+    lateinit var insertProject: String
+    lateinit var rotation: String
+    lateinit var stretch: String
+    lateinit var svnVersion: String
+    lateinit var timeZone: String
+    lateinit var width: String
+    lateinit var zoomModulus: String
+    lateinit var __NAME__: String
 
-open class Area(properties: Map<Any, Any?>) : Point(properties) {
-    var type: String
-    var width: Long
-    var height: Long
-
-    init {
-        type = properties.getString("type")
-        width = properties.getLong("width")
-        height = properties.getLong("height")
+    inner class Comunication {
+        lateinit var id: String
+        lateinit var name: String
     }
 }

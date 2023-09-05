@@ -14,18 +14,21 @@
  *   limitations under the License.
  */
 
-package com.github.kshulzh.led4k.common.model.areas
+package com.github.kshulzh.led4k.hd.model.elements
 
-import com.github.kshulzh.led4k.common.model.Point
-
-open class Area(properties: Map<Any, Any?>) : Point(properties) {
-    var type: String
-    var width: Long
-    var height: Long
-
-    init {
-        type = properties.getString("type")
-        width = properties.getLong("width")
-        height = properties.getLong("height")
-    }
+class HD_Photo_Plugin : HD_Node() {
+    override var name: String = "HD_Photo_Plugin"
+    lateinit var checked: String
+    lateinit var clearEffect: String
+    lateinit var clearTime: String
+    lateinit var convertImage: String
+    lateinit var dispEffect: String
+    lateinit var dispTime: String
+    lateinit var holdTime: String
+    lateinit var keepRatio: String
+    lateinit var preloadFilePath: String
+    lateinit var speedTimeIndex: String
+    lateinit var __GUID__: String
+    lateinit var __NAME__: String
+    lateinit var __FileList__: List<FileElement>
 }
