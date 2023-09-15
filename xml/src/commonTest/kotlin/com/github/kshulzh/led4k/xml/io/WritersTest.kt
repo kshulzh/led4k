@@ -1,7 +1,7 @@
 package com.github.kshulzh.led4k.xml.io
 
-import com.github.kshulzh.led4k.xml.model.Document
 import com.github.kshulzh.led4k.xml.model.Tag
+import com.github.kshulzh.led4k.xml.model.XmlDocument
 import kotlin.test.Test
 import kotlin.test.assertTrue
 
@@ -10,7 +10,7 @@ class WritersTest {
     fun shouldWriteTag() {
         val tag = Tag("HELLO")
         val charArray = CharArray(10000) { i -> (0.toChar()) }
-        CharArrayWriter(charArray).writeTag(tag)
+        CharArrayWriter(charArray).writeXmlTag(tag)
         assertTrue {
             charArray.concatToString().contains("<HELLO/>")
         }
@@ -18,9 +18,9 @@ class WritersTest {
 
     @Test
     fun shouldWriteDocument() {
-        val document = Document(Tag("HELLO", children = mutableListOf("1234")))
+        val document = XmlDocument(Tag("HELLO", children = mutableListOf("1234")))
         val charArray = CharArray(10000) { i -> (0.toChar()) }
-        CharArrayWriter(charArray).writeDocument(document)
+        CharArrayWriter(charArray).writeXmlDocument(document)
         assertTrue {
             charArray.concatToString().contains("<HELLO>")
         }

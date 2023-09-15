@@ -16,19 +16,50 @@
 
 package com.github.kshulzh.led4k.hd.model.elements
 
+import com.github.kshulzh.led4k.hd.ksp.annotations.HDAttribute
+import com.github.kshulzh.led4k.hd.ksp.annotations.HDElement
+import com.github.kshulzh.led4k.hd.ksp.annotations.HDList
+
+@HDElement
 class HD_Photo_Plugin : HD_Node() {
     override var name: String = "HD_Photo_Plugin"
+
+    @HDAttribute("Checked", "2")
     lateinit var checked: String
+
+    @HDAttribute("ClearEffect", "0")
     lateinit var clearEffect: String
+
+    @HDAttribute("ClearTime", "4")
     lateinit var clearTime: String
+
+    @HDAttribute("ConvertImage", "")
     lateinit var convertImage: String
+
+    @HDAttribute("DispEffect", "0")
     lateinit var dispEffect: String
+
+    @HDAttribute("DispTime", "4")
     lateinit var dispTime: String
+
+    @HDAttribute("HoldTime", "50")
     lateinit var holdTime: String
+
+    @HDAttribute("KeepRatio", "0")
     lateinit var keepRatio: String
+
+    @HDAttribute("PreloadFilePath", "")
     lateinit var preloadFilePath: String
+
+    @HDAttribute("SpeedTimeIndex", "4")
     lateinit var speedTimeIndex: String
+
+    @HDAttribute("__GUID__:", "")
     lateinit var __GUID__: String
+
+    @HDAttribute("__NAME__", "Unnamed")
     lateinit var __NAME__: String
+
+    @HDList("__FileList__")
     lateinit var __FileList__: List<FileElement>
 }

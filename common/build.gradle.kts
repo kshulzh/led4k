@@ -6,8 +6,8 @@ buildscript {
     }
 
     dependencies {
-        classpath("com.android.tools.build:gradle:7.3.1")
-        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.8.20")
+        classpath("com.android.tools.build:gradle:8.0.2")
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.9.0")
     }
 }
 plugins {
@@ -34,7 +34,7 @@ android {
 group = extra["led4k.group"]!!
 version = extra["led4k.version"]!!
 kotlin {
-    android()
+    androidTarget()
     jvm {
         jvmToolchain(17)
         //withJava()
@@ -61,20 +61,20 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:${extra["kotlinx.version"]!!}")
+                //implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:${extra["kotlinx.version"]!!}")
                 implementation("org.jetbrains.kotlin:kotlin-reflect:${extra["kotlin.version"]!!}")
                 implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.1")
             }
         }
         val commonTest by getting {
             dependencies {
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:${extra["kotlinx.version"]!!}")
+                //implementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:${extra["kotlinx.version"]!!}")
                 implementation(kotlin("test"))
             }
         }
         val jvmMain by getting {
             dependencies {
-                runtimeOnly("org.jetbrains.kotlinx:kotlinx-coroutines-android:${extra["kotlinx.version"]!!}")
+                //runtimeOnly("org.jetbrains.kotlinx:kotlinx-coroutines-android:${extra["kotlinx.version"]!!}")
             }
         }
         val jvmTest by getting {
@@ -84,9 +84,9 @@ kotlin {
         }
         val androidMain by getting {
             dependencies {
-                implementation("androidx.appcompat:appcompat:1.6.1")
-                implementation("androidx.activity:activity-compose:1.7.2")
-                implementation("androidx.core:core-ktx:1.10.1")
+                //implementation("androidx.appcompat:appcompat:1.6.1")
+                //implementation("androidx.activity:activity-compose:1.7.2")
+                implementation("androidx.core:core-ktx:1.12.0")
             }
         }
         val androidUnitTest by getting {

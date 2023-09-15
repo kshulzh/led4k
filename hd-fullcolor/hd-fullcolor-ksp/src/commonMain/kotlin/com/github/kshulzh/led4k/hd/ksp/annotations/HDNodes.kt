@@ -14,7 +14,6 @@
  *   limitations under the License.
  */
 
-package com.github.kshulzh.led4k.hd.mapper
+package com.github.kshulzh.led4k.hd.ksp.annotations
 
-fun mapNode() {
-}
+annotation class HDNodes

@@ -14,10 +14,14 @@
  *   limitations under the License.
  */
 
-package com.github.kshulzh.led4k.xml.model
+package com.github.kshulzh.led4k.hd
 
-class Document(
-    var tag: Tag?,
-    var version: String = "1.0",
-    var encoding: String = "UTF-8"
-)
+import kotlin.test.Test
+import kotlin.test.assertEquals
+
+class PlatformTest {
+    @Test
+    fun shouldBeNativePlatform() {
+        assertEquals("native", getName())
+    }
+}

@@ -16,8 +16,8 @@
 
 package com.github.kshulzh.led4k.xml.io
 
-import com.github.kshulzh.led4k.xml.model.Document
 import com.github.kshulzh.led4k.xml.model.Tag
+import com.github.kshulzh.led4k.xml.model.XmlDocument
 
 val escaped = mapOf(
     't' to '\t',
@@ -25,13 +25,13 @@ val escaped = mapOf(
 
     )
 
-fun Reader.readDocument(): Document {
-    var header = readHeader() ?: Tag("xml", attributes = mutableMapOf("version" to "1.0", "encoding" to "UTF-8"))
-    var tag = readTag()
-    return Document(tag, header.attributes["version"] ?: "1.0", header.attributes["encoding"] ?: "UTF-8")
+fun Reader.readXmlDocument(): XmlDocument {
+    var header = readXmlHeader() ?: Tag("xml", attributes = mutableMapOf("version" to "1.0", "encoding" to "UTF-8"))
+    var tag = readXmlTag()
+    return XmlDocument(tag, header.attributes["version"] ?: "1.0", header.attributes["encoding"] ?: "UTF-8")
 }
 
-fun Reader.readTag(): Tag? {
+fun Reader.readXmlTag(): Tag? {
     val position = position
     readWS()
     if (read() != '<') {
@@ -45,11 +45,11 @@ fun Reader.readTag(): Tag? {
     }
     readWS()
     var attributes = mutableMapOf<String, String?>()
-    var attribute = readAttribute()
+    var attribute = readXmlAttribute()
     while (attribute != null) {
         attributes.put(attribute.first, attribute.second)
         readWS()
-        attribute = readAttribute()
+        attribute = readXmlAttribute()
     }
     readWS()
     var c = read()
@@ -66,11 +66,11 @@ fun Reader.readTag(): Tag? {
     }
     var children = mutableListOf<Any>()
     readWS()
-    var child = readPlainText() ?: readTag()
+    var child = readPlainText() ?: readXmlTag()
     while (child != null) {
         children.add(child)
         readWS()
-        child = readPlainText() ?: readTag()
+        child = readPlainText() ?: readXmlTag()
     }
     c = read()
     if (c != '<') {
@@ -141,7 +141,7 @@ fun Reader.readString(): String? {
     return stringBuilder.toString()
 }
 
-fun Reader.readAttribute(): Pair<String, String?>? {
+fun Reader.readXmlAttribute(): Pair<String, String?>? {
     val position = position
     val name = readName() ?: return null
     val position1 = position
@@ -175,7 +175,7 @@ fun Reader.readPlainText(): String? {
     return stringBuilder.toString()
 }
 
-fun Reader.readHeader(): Tag? {
+fun Reader.readXmlHeader(): Tag? {
     val position = position
     readWS()
     if (read() != '<') {
@@ -194,11 +194,11 @@ fun Reader.readHeader(): Tag? {
     }
     readWS()
     var attributes = mutableMapOf<String, String?>()
-    var attribute = readAttribute()
+    var attribute = readXmlAttribute()
     while (attribute != null) {
         attributes.put(attribute.first, attribute.second)
         readWS()
-        attribute = readAttribute()
+        attribute = readXmlAttribute()
     }
     readWS()
     if (read() != '?') {

@@ -16,8 +16,17 @@
 
 package com.github.kshulzh.led4k.hd.model.elements
 
+import com.github.kshulzh.led4k.hd.ksp.annotations.HDAttribute
+import com.github.kshulzh.led4k.hd.ksp.annotations.HDList
+
+@HDList
 class FileElement {
+    @HDAttribute("MD5", "")
     lateinit var MD5: String
+
+    @HDAttribute("FileName", "")
     lateinit var fileName: String
+
+    @HDAttribute("FileKey", "")
     lateinit var fileKey: String
 }

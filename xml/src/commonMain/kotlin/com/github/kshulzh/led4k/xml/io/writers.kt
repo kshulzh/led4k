@@ -16,39 +16,39 @@
 
 package com.github.kshulzh.led4k.xml.io
 
-import com.github.kshulzh.led4k.xml.model.Document
 import com.github.kshulzh.led4k.xml.model.Tag
+import com.github.kshulzh.led4k.xml.model.XmlDocument
 
-fun Writer.writeDocument(document: Document) {
-    writeHeader(document)
+fun Writer.writeXmlDocument(document: XmlDocument) {
+    writeXmlHeader(document)
     document.tag?.apply {
-        writeTag(this)
+        writeXmlTag(this)
     }
 }
 
-fun Writer.writeHeader(document: Document) {
+fun Writer.writeXmlHeader(document: XmlDocument) {
     writeLine("<?xml version=\"${document.version}\" encoding=\"${document.encoding}\"?>")
 }
 
-fun Writer.writeTag(tag: Tag) {
+fun Writer.writeXmlTag(tag: Tag) {
     if (tag.children.isEmpty()) {
-        writeLine("<${tag.name}${mapAttributesToString(tag.attributes)}/>")
+        writeLine("<${tag.name}${encodeXmlAttributesToString(tag.attributes)}/>")
     } else {
         if (tag.children.find { it is Tag } != null) {
-            writeLine("<${tag.name}${mapAttributesToString(tag.attributes)}>")
-            setIndent(getIndent() + 1)
+            writeLine("<${tag.name}${encodeXmlAttributesToString(tag.attributes)}>")
+            indent++
             tag.children.forEach {
                 if (it is Tag) {
-                    writeTag(it)
+                    writeXmlTag(it)
                 } else {
                     writeLine(it.toString())
                 }
             }
-            setIndent(getIndent() - 1)
+            indent--
             writeLine("</${tag.name}>")
         } else {
             writeLine(
-                "<${tag.name}${mapAttributesToString(tag.attributes)}>${
+                "<${tag.name}${encodeXmlAttributesToString(tag.attributes)}>${
                     tag.children.map { it.toString() }.reduce { acc, s -> "$acc$s" }
                 }</${tag.name}>"
             )
@@ -56,21 +56,20 @@ fun Writer.writeTag(tag: Tag) {
     }
 }
 
-fun Writer.setIndentString(s: String) {
-    properties["indentString"] = s
-}
-
-fun Writer.getIndentString() = properties["indentString"] as? String ?: " "
-
-fun Writer.setIndent(n: Int) {
-    properties["indent"] = n
-}
-
-fun Writer.getIndent() = properties["indent"] as? Int ?: 0
+var Writer.indentString: String
+    set(value) {
+        properties["indentString"] = value
+    }
+    get() = properties["indentString"] as? String ?: " "
+var Writer.indent: Int
+    set(value) {
+        properties["indent"] = value
+    }
+    get() = properties["indent"] as? Int ?: 0
 
 
 fun Writer.writeLine(s: String) {
-    write("${getIndentString().repeat(getIndent())}$s\n")
+    write("${indentString.repeat(indent)}$s\n")
 }
 
 fun Writer.writeString(s: String) {
@@ -80,7 +79,7 @@ fun Writer.writeString(s: String) {
 
 fun escapeString(s: String) = "\"${s}\""
 
-fun mapAttributesToString(attributes: Map<String, String?>): String {
+fun encodeXmlAttributesToString(attributes: Map<String, String?>): String {
     return if (attributes.isEmpty()) {
         ""
     } else {

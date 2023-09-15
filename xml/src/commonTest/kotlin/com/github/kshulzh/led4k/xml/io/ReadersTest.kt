@@ -7,7 +7,7 @@ class ReadersTest {
     @Test
     fun shouldReadTag() {
         val rawXmlTag = "  <  hello a=\"999\" >  < a  / >    9090<  / hello> "
-        val tag = CharArrayReader(rawXmlTag.toCharArray()).readTag()
+        val tag = CharArrayReader(rawXmlTag.toCharArray()).readXmlTag()
         assertEquals("hello", tag?.name)
         assertEquals("999", tag?.attributes!!["a"]!!)
     }
@@ -16,7 +16,7 @@ class ReadersTest {
     fun shouldReadDocument() {
         val rawXmlDocument = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" +
                 "<  hello a=\"999\" >  < a  / >    9090<  / hello> "
-        val tag = CharArrayReader(rawXmlDocument.toCharArray()).readDocument()
+        val tag = CharArrayReader(rawXmlDocument.toCharArray()).readXmlDocument()
         assertEquals("1.0", tag.version)
         assertEquals("hello", tag.tag?.name)
         assertEquals("999", tag.tag?.attributes!!["a"]!!)
