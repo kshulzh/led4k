@@ -1,0 +1,26 @@
+[versions]
+kotlinxSerialization = "1.7.0"
+kotlin = "2.0.10"
+ksp = "2.0.10-1.0.20"
+agp = "8.2.0"
+pdvriezeXmlutil = "0.90.1"
+
+[libraries]
+kotlinx-serialization-core = { module = "org.jetbrains.kotlinx:kotlinx-serialization-core", version.ref = "kotlinxSerialization" }
+kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinxSerialization" }
+xmlutil-serialization = { module = "io.github.pdvrieze.xmlutil:serialization", version.ref = "pdvriezeXmlutil" }
+xmlutil-core = { module = "io.github.pdvrieze.xmlutil:core", version.ref = "pdvriezeXmlutil" }
+xmlutil-serialutil = { module = "io.github.pdvrieze.xmlutil:serialutil", version.ref = "pdvriezeXmlutil" }
+[bundles]
+xmlutil-serialization = ["xmlutil-serialization"]
+xmlutil-core = ["xmlutil-core"]
+xmlutil-serialutil = ["xmlutil-serialutil"]
+kotlinxSerializationCore = ["kotlinx-serialization-core"]
+kotlinxSerializationJson = ["kotlinx-serialization-json"]
+
+[plugins]
+kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
+kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
+android-library = { id = "com.android.library", version.ref = "agp" }
+ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
