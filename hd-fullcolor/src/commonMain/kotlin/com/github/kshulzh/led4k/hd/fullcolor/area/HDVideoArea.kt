@@ -29,14 +29,9 @@ import com.github.kshulzh.led4k.hd.fullcolor.model.HDVideoPlugin
 import com.github.kshulzh.led4k.media.GraphicMedia
 import com.github.kshulzh.led4k.media.UriMedia
 
-class HDVideoArea(
-    val hdFramePlugin: HDFramePlugin = HDFramePlugin(),
+class HDVideoArea: BaseVideoArea, HDMediaElement, HDOrdinaryScenePluginNode, HDFramePluginNode {
+    val hdFramePlugin: HDFramePlugin = HDFramePlugin()
     val hdVideoPlugin: HDVideoPlugin = HDVideoPlugin()
-) : BaseVideoArea, HDMediaElement, HDOrdinaryScenePluginNode, HDFramePluginNode {
-    init {
-        hdFramePlugin.childType = "HD_Video_Plugin"
-        hdFramePlugin.addNode(hdVideoPlugin)
-    }
 
     override var x: Int
         get() = hdFramePlugin.x
@@ -58,27 +53,39 @@ class HDVideoArea(
         set(value) {
             hdFramePlugin.height = value
         }
-    override val mediaElements: MutableList<HDMedia>
-        get() {
-            val m: HDMedia = when (media) {
-                is HDMedia -> media as HDMedia
-                is UriMedia -> HDMedia.of((media as UriMedia).uri)
-                is GraphicMedia -> HDMedia.ofMedia(media as GraphicMedia)
+    override var mediaElements: MutableList<HDMedia> = mutableListOf()
+
+    override var media: Media get() = mediaElements[0]
+        set(value) {
+            val m: HDMedia = when (value) {
+                is HDMedia -> value
+                is UriMedia -> HDMedia.of(value.uri)
+                is GraphicMedia -> HDMedia.ofMedia(value)
                 else -> throw RuntimeException("Unsupported class ${media::class}")
             }
-            hdVideoPlugin.fileList.clear()
-            hdVideoPlugin.fileList.add(
-                FileItem(
-                    m.md5,
-                    m.fileName,
-                    "Video"
-                )
-            )
-            return mutableListOf(m)
+            mediaElements = mutableListOf(m)
         }
-    override lateinit var media: Media
     override val hdOrdinaryScenePluginNode: HDOrdinaryScenePlugin.Node
-        get() = hdFramePlugin
+        get() {
+            hdFramePlugin.childType = "HD_Video_Plugin"
+            hdFramePlugin.nodes.clear()
+            hdFramePlugin.addNode(hDFramePluginNode)
+
+            return hdFramePlugin
+        }
     override val hDFramePluginNode: HDFramePlugin.Node
-        get() = hdVideoPlugin
+        get() {
+            hdVideoPlugin.fileList.clear()
+            hdVideoPlugin.fileList.addAll(
+                mediaElements.map {
+                    FileItem(
+                        it.md5,
+                        it.fileName,
+                        "Video"
+                    )
+                }
+            )
+
+            return hdVideoPlugin
+        }
 }

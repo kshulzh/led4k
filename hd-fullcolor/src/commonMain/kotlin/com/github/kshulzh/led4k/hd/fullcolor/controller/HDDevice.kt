@@ -157,13 +157,9 @@ class HDDevice(val connection: TCPConnection) {
     }
 
     fun upload(main: HDMedia, vararg resources: HDMedia, deleteOldFiles: Boolean = true) {
-        resources.forEach {
-            it.inputStream.transferTo(Paths.get(it.fileName).outputStream)
-        }
-        main.inputStream.transferTo(Paths.get(main.fileName).outputStream)
-        var size: Long = main.inputStream.available().toLong()
+        var size: Long = main.size
         for (file in resources) {
-            size += file.inputStream.available()
+            size += file.size
         }
         sendSize(size)
         val m = resources.associateBy { it.md5 }

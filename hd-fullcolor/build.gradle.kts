@@ -47,7 +47,6 @@ publishing {
     repositories {
         maven {
             name = "GitHubPackages"
-            version = extra["project.version"]!!.toString() + System.getenv("env")
             url = URI.create("https://maven.pkg.github.com/kshulzh/led4k")
             credentials {
                 username = System.getenv("GITHUB_ACTOR")

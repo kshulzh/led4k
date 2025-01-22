@@ -26,4 +26,5 @@ interface HDMedia : Media {
     val md5: String
     val extension: String
     val fileName get() = "${md5}.$extension"
+    val size: Long get() = inputStream.available().toLong()
 }
